@@ -18,10 +18,11 @@ export default class App extends React.Component {
 
   async _subscribe() {
     const batteryLevel = await Battery.getBatteryLevelAsync();
-    this.setState({ batteryLevel });
-    this._subscription = Battery.addBatteryLevelListener(({ batteryLevel }) => {
-      this.setState({ batteryLevel });
-      console.log("batteryLevel changed!", batteryLevel);
+    const valor = Math.round(batteryLevel * 10000) / 100;
+    this.setState({ valor });
+    this._subscription = Battery.addBatteryLevelListener(({ valor }) => {
+      this.setState({ valor });
+      console.log("batteryLevel changed!", valor);
     });
   }
 
@@ -36,7 +37,7 @@ export default class App extends React.Component {
         <Text style={styles.titulo}>Nível atual da bateria</Text>
 
         <Text>
-          {this.state.batteryLevel}{" "}
+          {this.state.valor}%{" "}
           <FontAwesome name="battery-4" size={16} color="black" />
         </Text>
       </View>
